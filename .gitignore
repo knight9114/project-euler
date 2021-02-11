@@ -5,3 +5,6 @@ a.out
 Cargo.lock
 *target*
 */rust/.gitignore
+
+# Vim remnants
+*.swp
