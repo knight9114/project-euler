@@ -3,4 +3,5 @@ a.out
 
 # Rust remnants
 Cargo.lock
-targets/*
+*target*
+*/rust/.gitignore
