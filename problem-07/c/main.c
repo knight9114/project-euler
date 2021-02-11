@@ -1,6 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+int prime_sieve(int n) {
+	// Prepare
+	int limit = (n * n) - 2;
+	int *numbers = malloc(limit * sizeof(int));
+
+	// Load Initial Array
+	for (int i = 0; i < limit; i++) {
+		numbers[i] = i + 2;
+	}
+
+	// Sieve
+	int n_prime = 0;
+	int output = 0;
+	for (int i = 0; i < limit; i++) {
+		int x = numbers[i];
+
+		if (x != 0) {
+			n_prime++;
+			for (int j = i + x; j < limit; j += x) {
+				numbers[j] = 0;
+			}
+		}
+
+		if (n_prime == n) {
+			output = x;
+			break;
+		}
+	}
+
+	return output;
+}
+
+/*
 int prime_sieve(int n, int **output) {
 	// Prepare
 	int *numbers = malloc((n - 2) * sizeof(int));
@@ -45,24 +78,11 @@ int max_int(int a, int b) {
 	if (a < b) return b;
 	return a;
 }
+*/
 
 int solution(int n) {
-	// Prepare
-	int max = n * n;
-	int *primes = NULL;
-
 	// Get Primes
-	int n_primes = prime_sieve(max, &primes);
-	if (n_primes < n) {
-		free(primes);
-		return 0;
-	}
-
-	// Find Prime
-	int output = primes[n];
-	free(primes);
-
-	return output;
+	return prime_sieve(n);
 }
 
 int main() {
