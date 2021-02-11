@@ -30,55 +30,11 @@ int prime_sieve(int n) {
 		}
 	}
 
-	return output;
-}
-
-/*
-int prime_sieve(int n, int **output) {
-	// Prepare
-	int *numbers = malloc((n - 2) * sizeof(int));
-
-	// Load Initial Array
-	for (int i = 0; i < n - 2; i++) {
-		numbers[i] = i + 2;
-	}
-
-	// Sieve of Erasthosthenes
-	int count = 0;
-	for (int i = 0; i < n - 2; i++) {
-		int x = numbers[i];
-
-		if (x != 0) {
-			count++;
-			for (int j = i + x; j < n - 2; j += x) {
-				numbers[j] = 0;
-			}
-		}
-	}
-
-	// Load Output
-	free(*output);
-	*output = (int*)malloc(count * sizeof(int));
-	int idx = 0;
-	for (int i = 0; i < n - 2; i++) {
-		int x = numbers[i];
-		if (x != 0) {
-			(*output)[idx] = x;
-			idx++;
-		}
-	}
-
-	// Free
+	// Free Number Array
 	free(numbers);
 
-	return count;
+	return output;
 }
-
-int max_int(int a, int b) {
-	if (a < b) return b;
-	return a;
-}
-*/
 
 int solution(int n) {
 	// Get Primes
