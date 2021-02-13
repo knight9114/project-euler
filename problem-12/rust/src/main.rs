@@ -3,35 +3,51 @@ fn main() {
 }
 
 fn solution(n: u64) -> u64 {
-    return Triangle::new()
-        .skip_while(|&x| get_num_factors(x) <= n)
-        .next()
-        .unwrap()
-}
+    // Prepare
+    let mut output = 0;
 
-fn get_num_factors(n: u64) -> u64 {
-    return (1..n + 1).into_iter().filter(|&x| n % x == 0).collect::<Vec<u64>>().len() as u64
-}
+    // Search
+    for i in 0.. {
+        // Handle Summation
+        let n_factors = match i % 2 {
+            0 => count_factors(i / 2, 2) * count_factors(i + 1, 2),
+            1 => count_factors(i, 2) * count_factors((i + 1) / 2, 2),
+            _ => u64::MAX,
+        };
 
-struct Triangle {
-    index: u64,
-    total: u64,
-}
-
-impl Triangle {
-    fn new() -> Triangle {
-        return Triangle{index: 0, total: 0}
+        // Break
+        if n_factors > n {
+            output = i * (i + 1) / 2;
+            break;
+        }
     }
+
+    return output
 }
 
-impl Iterator for Triangle {
-    type Item = u64;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        // Update State
-        self.index += 1;
-        self.total += self.index;
-
-        return Some(self.total)
+fn count_factors(mut n: u64, start: u64) -> u64 {
+    // Base Case
+    if n == 1 {
+        return 1
     }
+
+    // Recursively Count Factors
+    for i in start..sqrt(n) {
+        if n % i == 0 {
+            let mut n_factors = 1;
+
+            while n % i == 0 {
+                n /= i;
+                n_factors += 1;
+            }
+
+            return count_factors(n, i + 1) * n_factors
+        }
+    }
+
+    return 2
+}
+
+fn sqrt(n: u64) -> u64 {
+    return ((n as f64).sqrt() as u64) + 1
 }
